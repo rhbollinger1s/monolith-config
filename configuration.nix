@@ -44,7 +44,7 @@
   };
 
 # ----- [ DISPLAY MANAGER ] ------------------------------
-# Disable SDDM
+# Could be set to others like LY, but LY has bugs
 services.displayManager.sddm.enable = true;
 
 # ----- [ KDE PLASMA ] ------------------------------
@@ -67,7 +67,7 @@ services.displayManager.sddm.enable = true;
 #    graphics.enable32Bit = true;
 #    amdgpu.opencl.enable = true;
 #    amdgpu.initrd.enable = true; # sets boot.initrd.kernelModules = ["amdgpu"];
-#    hardware.amdgpu.legacySupport.enable = true; # Only use for Southern islands or Sea islands GPUs
+#    amdgpu.legacySupport.enable = true; # Only use for Southern islands or Sea islands GPUs
 #  };
 
 # ----- [ ROCm / HIP WORKAROUND ] ------------------------------
@@ -101,7 +101,7 @@ services.displayManager.sddm.enable = true;
    };
 
 # ----- [ USER ACCOUNTS ] ------------------------------
-  # Define a user account. Don't forget to set a password with ‘passwd’.
+  # Don't forget to set a password with ‘passwd’.
   users.users.monoUser = {
     shell = pkgs.fish;
     isNormalUser = true;
@@ -112,7 +112,7 @@ services.displayManager.sddm.enable = true;
     ];
   };
   users.users.guest = {
-    shell = pkgs.bash
+    shell = pkgs.bash;
     isNormalUser = true;
     description = "guest user for monolith config";
     extraGroups = [  ];
@@ -246,7 +246,8 @@ services.displayManager.sddm.enable = true;
     shellAliases = {
       ff = "fastfetch";
       cmat = "cmatrix -Bs";
-      update = "nix flake update && sudo nixos-rebuild switch --flake .#monolith";
+      update = "echo "This will rebuild from config, if you want to update packages, try fullUpdate"; sudo nixos-rebuild switch --flake .#monolith";
+      fullUpdate = "echo "Updating packages and rebuilding system from config"; sudo bash -c "fwupdmgr refresh; fwupdmgr get-updates; fwupdmgr update; nix flake update; sudo nixos-rebuild switch --flake .#monolith"";
       cat = "bat";
       ls = "eza";
       cd = "zoxide";
@@ -276,8 +277,8 @@ system.autoUpgrade.allowReboot = false;
     pulse.enable = true;
     jack.enable = true;
     media-session.enable = true;
-  services.lact.enable = true;
   };
+
   # For overclocking AMD GPUs
   #services.lact.enable = true;
 
@@ -293,6 +294,12 @@ system.autoUpgrade.allowReboot = false;
   #OpenWebUI for ollama
   #services.open-webui.enable = true;
 
+  # Firmware updating software
+  services.fwupd.enable = true;
+
+  # Power profiles
+  services.power-profiles-daemon.enable = true;
+
 # ----- [ FLAKES ] ------------------------------
   nix.settings.experimental-features = [ "nix-command" "flakes" ]; # This is not unstable
 
@@ -301,6 +308,7 @@ system.autoUpgrade.allowReboot = false;
   networking.firewall.allowedTCPPorts = [ 22 ];
   networking.firewall.allowedUDPPorts = [  ];
   networking.firewall.enable = true;
+  programs.steam.remotePlay.openFirewall = true;
 
 # ----- [ STATE VERSION ] ------------------------------
   system.stateVersion = "25.11" ; #Even if you update, do not change this
