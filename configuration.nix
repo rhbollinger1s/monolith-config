@@ -247,6 +247,9 @@ services.displayManager.sddm.enable = true;
       ff = "fastfetch";
       cmat = "cmatrix -Bs";
       update = "nix flake update && sudo nixos-rebuild switch --flake .#monolith";
+      cat = "bat";
+      ls = "eza";
+      cd = "zoxide";
     };
     shellInit = "echo 'NixOS btw'";
   };
@@ -258,10 +261,13 @@ system.autoUpgrade.allowReboot = false;
 # ----- [ SERVICES ] ------------------------------
   # Cups printing
   services.printing.enable = true;
+
   # Fail2ban enabled
   services.fail2ban.enable = true;
+
   # rtkit enabled
   security.rtkit.enable = true;
+
   # audio setup
   services.pipewire = {
     enable = true;
@@ -274,13 +280,16 @@ system.autoUpgrade.allowReboot = false;
   };
   # For overclocking AMD GPUs
   #services.lact.enable = true;
+
   # Enable OpenSSH
   services.openssh.enable = true;
+
   #ollama
   #services.ollama = {
   #enable = true;
   #acceleration = "cuda"; # Only for NVIDIA GPUs
   #};
+
   #OpenWebUI for ollama
   #services.open-webui.enable = true;
 
