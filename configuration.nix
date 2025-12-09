@@ -16,7 +16,7 @@
 # ----- [ KERNEL and FIRMWARE ] ------------------------------
   # Set kernel to latest release
   boot.kernelPackages = pkgs.linuxPackages_latest;
-  firmware = [ pkgs.linux-firmware ];
+  hardware.firmware = [ pkgs.linux-firmware ];
 
 # ----- [ HOSTNAME ] ------------------------------
   # Set up hostname
@@ -246,6 +246,7 @@ services.displayManager.sddm.enable = true;
     shellAliases = {
       ff = "fastfetch";
       cmat = "cmatrix -Bs";
+      checkConfig = "nix eval .#nixosConfigurations.monolith.config.system.build.toplevel";
       update = ''echo "This will rebuild from config, if you want to update packages, try fullUpdate"; sudo nixos-rebuild switch --flake .#monolith '';
       fullUpdate = ''echo "Updating packages and rebuilding system from config"; sudo bash -c "fwupdmgr refresh; fwupdmgr get-updates; fwupdmgr update; nix flake update; nixos-rebuild switch --flake .#monolith";'';
       cat = "bat";
@@ -262,6 +263,12 @@ system.autoUpgrade.allowReboot = false;
 # ----- [ SERVICES ] ------------------------------
   # Cups printing
   services.printing.enable = true;
+
+  # Steam game store
+  programs.steam = {
+  enable = true;
+  remotePlay.openFirewall = true;
+  };
 
   # Fail2ban enabled
   services.fail2ban.enable = true;
@@ -308,7 +315,7 @@ system.autoUpgrade.allowReboot = false;
   networking.firewall.allowedTCPPorts = [ 22 ];
   networking.firewall.allowedUDPPorts = [  ];
   networking.firewall.enable = true;
-  programs.steam.remotePlay.openFirewall = true;
+  #programs.steam.remotePlay.openFirewall = true; # In steam as service block
 
 # ----- [ STATE VERSION ] ------------------------------
   system.stateVersion = "25.11" ; #Even if you update, do not change this
