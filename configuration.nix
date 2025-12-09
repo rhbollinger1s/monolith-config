@@ -1,3 +1,4 @@
+
 { config, pkgs, ... }:
 
 # ----- [ IMPORTS ] ------------------------------
@@ -12,9 +13,10 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-# ----- [ KERNEL ] ------------------------------
+# ----- [ KERNEL and FIRMWARE ] ------------------------------
   # Set kernel to latest release
   boot.kernelPackages = pkgs.linuxPackages_latest;
+  firmware = [ pkgs.linux-firmware ];
 
 # ----- [ HOSTNAME ] ------------------------------
   # Set up hostname
@@ -59,10 +61,35 @@ services.displayManager.sddm.enable = true;
 #    nvidia.open = false; # If GPU is new enough, set to true
 #  };
 
+# AMD ( Uncomment if using AMD GPU )
+# hardware = {
+#    graphics.enable = true;
+#    graphics.enable32Bit = true;
+#    amdgpu.opencl.enable = true;
+#    amdgpu.initrd.enable = true; # sets boot.initrd.kernelModules = ["amdgpu"];
+#    hardware.amdgpu.legacySupport.enable = true; # Only use for Southern islands or Sea islands GPUs
+#  };
+
+# ----- [ ROCm / HIP WORKAROUND ] ------------------------------
+# Workaround for software that hardcodes /opt/rocm (e.g., HIP/ROCm apps) from NixOS docs
+# Only for AMD GPUS. For AI usage
+#systemd.tmpfiles.rules = 
+#let
+#  rocmEnv = pkgs.symlinkJoin {
+#    name = "rocm-combined";
+#    paths = with pkgs.rocmPackages; [
+#      rocblas
+#      hipblas
+#      clr
+#    ];
+#  };
+#in [
+#  "L+    /opt/rocm   -    -    -     -    ${rocmEnv}"
+#];
+
 # ----- [ XDG PORTALS ] ------------------------------
   xdg.portal.enable = true;
   xdg.portal.extraPortals = [pkgs.xdg-desktop-portal-kde];
-
 
 # ----- [ SUID WRAPPERS ] ------------------------------
   # Some programs need SUID wrappers, can be configured further or are
@@ -159,6 +186,7 @@ services.displayManager.sddm.enable = true;
     };
     shellInit = "echo 'NixOS btw'";
   };
+  
 # ----- [ AUTO UPDATES ] ------------------------------
 system.autoUpgrade.enable = true;
 system.autoUpgrade.allowReboot = false;
@@ -168,7 +196,9 @@ system.autoUpgrade.allowReboot = false;
   services.printing.enable = true;
   # Fail2ban enabled
   services.fail2ban.enable = true;
+  # rtkit enabled
   security.rtkit.enable = true;
+  # audio setup
   services.pipewire = {
     enable = true;
     alsa.enable = true;
@@ -176,7 +206,10 @@ system.autoUpgrade.allowReboot = false;
     pulse.enable = true;
     jack.enable = true;
     media-session.enable = true;
+  services.lact.enable = true;
   };
+  # For overclocking AMD GPUs
+  #services.lact.enable = true;
   # Enable OpenSSH
   services.openssh.enable = true;
   #ollama
@@ -186,6 +219,7 @@ system.autoUpgrade.allowReboot = false;
   #};
   #OpenWebUI for ollama
   #services.open-webui.enable = true;
+  
 # ----- [ FLAKES ] ------------------------------
   nix.settings.experimental-features = [ "nix-command" "flakes" ]; # This is not unstable
 
@@ -194,6 +228,8 @@ system.autoUpgrade.allowReboot = false;
   networking.firewall.allowedTCPPorts = [ 22 ];
   networking.firewall.allowedUDPPorts = [  ];
   networking.firewall.enable = true;
-
+  
+# ----- [ STATE VERSION ] ------------------------------
   system.stateVersion = "25.11" ; #Even if you update, do not change this
 }
+
