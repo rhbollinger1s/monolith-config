@@ -49,7 +49,7 @@ services.displayManager.sddm.enable = true;
   # Add KDE Plasma desktop for non technical users of PC
   services.desktopManager.plasma6.enable = true;
 
-# ----- [ DRIVER CONFIG ] ------------------------------4
+# ----- [ DRIVER CONFIG ] ------------------------------
 # Nivida ( Uncomment if using nvidia GPU )
 # hardware = {
 #    graphics.enable = true;
