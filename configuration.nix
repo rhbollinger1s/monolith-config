@@ -15,7 +15,8 @@
 
 # ----- [ KERNEL and FIRMWARE ] ------------------------------
   # Set kernel to latest release
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages_lts;
+  #boot.kernelPackages = pkgs.linuxPackages_latest; # If you have newer hardware
   hardware.firmware = [ pkgs.linux-firmware ];
 
 # ----- [ HOSTNAME ] ------------------------------
