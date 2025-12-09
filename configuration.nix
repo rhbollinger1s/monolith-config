@@ -248,7 +248,7 @@ services.displayManager.sddm.enable = true;
       cmat = "cmatrix -Bs";
       checkConfig = "nix eval .#nixosConfigurations.monolith.config.system.build.toplevel";
       update = ''echo "This will rebuild from config, if you want to update packages, try fullUpdate"; sudo nixos-rebuild switch --flake .#monolith '';
-      fullUpdate = ''echo "Updating packages and rebuilding system from config"; sudo bash -c "fwupdmgr refresh; fwupdmgr get-updates; fwupdmgr update; nix flake update; nixos-rebuild switch --flake .#monolith";'';
+      fullUpdate = ''echo "Updating packages and rebuilding system from config"; sudo bash -c "fwupdmgr refresh; fwupdmgr get-updates; fwupdmgr update; nix flake update; nixos-rebuild switch --flake .#monolith"'';
       cat = "bat";
       ls = "eza";
       cd = "zoxide";
@@ -257,8 +257,8 @@ services.displayManager.sddm.enable = true;
   };
 
 # ----- [ AUTO UPDATES ] ------------------------------
-system.autoUpgrade.enable = true;
-system.autoUpgrade.allowReboot = false;
+#system.autoUpgrade.enable = true;
+#system.autoUpgrade.allowReboot = false;
 
 # ----- [ SERVICES ] ------------------------------
   # Cups printing
