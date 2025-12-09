@@ -73,7 +73,7 @@ services.displayManager.sddm.enable = true;
 # ----- [ ROCm / HIP WORKAROUND ] ------------------------------
 # Workaround for software that hardcodes /opt/rocm (e.g., HIP/ROCm apps) from NixOS docs
 # Only for AMD GPUS. For AI usage
-#systemd.tmpfiles.rules = 
+#systemd.tmpfiles.rules =
 #let
 #  rocmEnv = pkgs.symlinkJoin {
 #    name = "rocm-combined";
@@ -130,49 +130,113 @@ services.displayManager.sddm.enable = true;
 
   # Installed Packages
   environment.systemPackages = with pkgs; [
-    #Term
-    kitty
-    foot
 
-    #Term-Apps
-    fastfetch
-    cmatrix
-    neovim
-    asciiquarium
-    htop
-    lolcat
-    nano
-    ranger
-    unzip
-    vim
+  # Terminal Emulators
+  alacritty
+  foot
+  kitty
 
-    #GUI-Apps
-    kdePackages.kate
-    kdePackages.dolphin
-    gnome-boxes
-    godot
-    vlc
-    libreoffice
-    spotify
-    obs-studio
-    obsidian
-    vscode
+  # File Managers & Text Editors (CLI + GUI)
+  kdePackages.dolphin
+  kdePackages.kate
+  nano
+  neovim
+  ranger
+  vim
 
-    #Games
-    superTuxKart
-    steam
-    # bsdgames # Has bugs with fish shell, try at your own risk
+  # System Info & Eye Candy
+  asciiquarium
+  btop
+  bottom
+  cmatrix
+  fastfetch
+  htop
+  lolcat
+  procs
 
-    #else
-    git
-    wine
-    docker
-    less
-    pavucontrol
-    #timeshift (Not needed for nixOS, but here just in case)
+  # Web & Media
+  chromium
+  firefox
+  mpv
+  vlc
+  yt-dlp
+
+  # Productivity & Office
+  anki
+  calibre
+  libreoffice-qt-fresh
+  obsidian
+  spotify
+  thunderbird
+  zathura
+
+  # Core CLI Utilities
+  curl
+  git
+  gnupg
+  less
+  unzip
+  wget
+
+  # Modern CLI Replacements
+  bat           # cat with syntax highlighting
+  delta         # git diff highlighter
+  eza           # modern ls
+  fd            # simple, fast find
+  fzf           # fuzzy finder
+  ripgrep       # recursive grep
+  zoxide        # smarter cd
+
+  # Development and Container Tools
+  direnv
+  docker
+  lazydocker    # TUI for Docker/Podman
+  nixpkgs-fmt
+  podman        # Docker alternative (rootless by default)
+  vscode
+
+  # Gaming
+  gamemode
+  godot
+  lutris
+  mangohud
+  protonup-qt
+  steam
+  steam-run
+  superTuxKart
+
+  # Creative & Multimedia
+  audacity
+  blender
+  gimp
+  handbrake
+  inkscape
+  krita
+  obs-studio
+
+  # System Maintenance & Hardware
+  lm_sensors
+  pciutils       # lspci
+  pavucontrol
+  smartmontools
+  usbutils       # lsusb
+
+  # Security & Privacy
+  keepassxc
+  tor-browser
+  yubikey-manager
+
+  # Runtime & Compatibility
+  gnome-boxes    # virtual machines
+  wine
+
+  # Nix Eco Utilities
+  nix-index
+  nix-index-completion
+  nix-tree
 
   ];
-  # Install firefox.
+  # Install firefox
   programs.firefox.enable = true;
   programs.steam.enable = true;
   programs.starship.enable = true;
@@ -186,7 +250,7 @@ services.displayManager.sddm.enable = true;
     };
     shellInit = "echo 'NixOS btw'";
   };
-  
+
 # ----- [ AUTO UPDATES ] ------------------------------
 system.autoUpgrade.enable = true;
 system.autoUpgrade.allowReboot = false;
@@ -219,7 +283,7 @@ system.autoUpgrade.allowReboot = false;
   #};
   #OpenWebUI for ollama
   #services.open-webui.enable = true;
-  
+
 # ----- [ FLAKES ] ------------------------------
   nix.settings.experimental-features = [ "nix-command" "flakes" ]; # This is not unstable
 
@@ -228,7 +292,7 @@ system.autoUpgrade.allowReboot = false;
   networking.firewall.allowedTCPPorts = [ 22 ];
   networking.firewall.allowedUDPPorts = [  ];
   networking.firewall.enable = true;
-  
+
 # ----- [ STATE VERSION ] ------------------------------
   system.stateVersion = "25.11" ; #Even if you update, do not change this
 }
