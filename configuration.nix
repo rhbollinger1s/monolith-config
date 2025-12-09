@@ -85,8 +85,9 @@ services.displayManager.sddm.enable = true;
     ];
   };
   users.users.guest = {
+    shell = pkgs.bash
     isNormalUser = true;
-    description = "josh";
+    description = "guest user for monolith config";
     extraGroups = [  ];
     packages = with pkgs; [
     ];
