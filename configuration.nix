@@ -236,6 +236,24 @@ services.displayManager.sddm.enable = true;
   nix-index-completion
   nix-tree
 
+  # Custom Monolith Script, powers: "cleanUp" command
+  (writeScriptBin "cleanUpOldGen" ''
+    #!${stdenv.shell}
+    set -euo pipefail
+    PROFILE="/nix/var/nix/profiles/system"
+    ROOTS_DIR="/nix/var/nix/gcroots"
+    # Remove old pinned GC roots
+    find "$ROOTS_DIR" -maxdepth 1 -name "system-gen-*" -delete
+    # Get the last 3 generation numbers
+    gens=$(nix-env --list-generations --profile "$PROFILE" | tail -3 | awk '{print $1}')
+    # Pin them as GC roots
+    for gen in $gens; do
+        ln -sf "$PROFILE-$gen-link" "$ROOTS_DIR/system-gen-$gen"
+    done
+    # Run garbage collection (older than 14 days)
+    nix-collect-garbage --delete-older-than 14d
+  '')
+
   ];
   # Install firefox
   programs.firefox.enable = true;
@@ -248,6 +266,7 @@ services.displayManager.sddm.enable = true;
       ff = "fastfetch";
       cmat = "cmatrix -Bs";
       checkConfig = "nix eval .#nixosConfigurations.monolith.config.system.build.toplevel";
+      cleanUp = "cleanUp = "cleanUpOldGen";
       update = ''echo "This will rebuild from config, if you want to update packages, try fullUpdate"; sudo nixos-rebuild switch --flake .#monolith '';
       fullUpdate = ''echo "Updating packages and rebuilding system from config"; sudo bash -c "fwupdmgr refresh; fwupdmgr get-updates; fwupdmgr update; nix flake update; nixos-rebuild switch --flake .#monolith"'';
       cat = "bat";
