@@ -60,6 +60,8 @@ services.displayManager.sddm.enable = true;
 #    nvidia.nvidiaSettings = true;
 #    nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
 #    nvidia.open = false; # If GPU is new enough, set to true
+#    hardware.opengl.enable = true;
+#    hardware.nvidia.opencl.enable = true;
 #  };
 
 # AMD ( Uncomment if using AMD GPU )
