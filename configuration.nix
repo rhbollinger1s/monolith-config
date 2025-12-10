@@ -266,7 +266,7 @@ services.displayManager.sddm.enable = true;
       ff = "fastfetch";
       cmat = "cmatrix -Bs";
       checkConfig = "nix eval .#nixosConfigurations.monolith.config.system.build.toplevel";
-      cleanUp = "cleanUp = "cleanUpOldGen";
+      cleanUp = "cleanUpOldGen";
       update = ''echo "This will rebuild from config, if you want to update packages, try fullUpdate"; sudo nixos-rebuild switch --flake .#monolith '';
       fullUpdate = ''echo "Updating packages and rebuilding system from config"; sudo bash -c "fwupdmgr refresh; fwupdmgr get-updates; fwupdmgr update; nix flake update; nixos-rebuild switch --flake .#monolith"'';
       cat = "bat";
