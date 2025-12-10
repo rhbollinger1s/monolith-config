@@ -204,7 +204,7 @@ services.displayManager.sddm.enable = true;
   lutris
   mangohud
   protonup-qt
-  steam
+  #steam # Installed as a service
   steam-run
   superTuxKart
 
@@ -291,6 +291,8 @@ services.displayManager.sddm.enable = true;
   enable = true;
   remotePlay.openFirewall = true;
   };
+  # Only for if you own steam hardware
+  # hardware.steam-hardware.enable = true;
 
   # Fail2ban enabled
   services.fail2ban.enable = true;
