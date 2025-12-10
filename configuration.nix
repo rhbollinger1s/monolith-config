@@ -58,7 +58,7 @@ services.displayManager.sddm.enable = true;
 #    graphics.enable = true;
 #    nvidia.modesetting.enable = true;
 #    nvidia.nvidiaSettings = true;
-#    nvidia.package = #config.boot.kernelPackages.nvidiaPackages.stable;
+#    nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
 #    nvidia.open = false; # If GPU is new enough, set to true
 #  };
 
