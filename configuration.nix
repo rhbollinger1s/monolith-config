@@ -126,10 +126,14 @@ services.displayManager.sddm.enable = true;
 # ----- [ PROGRAMS ] ------------------------------
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
+
   #fonts
+
   fonts.packages = with pkgs; [
       nerd-fonts.jetbrains-mono
   ];
+
+  # Downloaded Programs
 
   # Installed Packages
   environment.systemPackages = with pkgs; [
@@ -204,7 +208,7 @@ services.displayManager.sddm.enable = true;
   lutris
   mangohud
   protonup-qt
-  #steam # Installed as a service
+  #steam # Installed 
   steam-run
   superTuxKart
 
@@ -257,10 +261,21 @@ services.displayManager.sddm.enable = true;
   '')
 
   ];
+
+  # Enabled Programs
+
   # Install firefox
   programs.firefox.enable = true;
-  programs.steam.enable = true;
   programs.starship.enable = true;
+
+  # Steam game store
+  programs.steam = {
+  enable = true;
+  remotePlay.openFirewall = true;
+  };
+  # Only for if you own steam hardware
+  # hardware.steam-hardware.enable = true;
+
   # Fish Shell Config
   programs.fish = {
     enable = true;
@@ -285,14 +300,6 @@ services.displayManager.sddm.enable = true;
 # ----- [ SERVICES ] ------------------------------
   # Cups printing
   services.printing.enable = true;
-
-  # Steam game store
-  programs.steam = {
-  enable = true;
-  remotePlay.openFirewall = true;
-  };
-  # Only for if you own steam hardware
-  # hardware.steam-hardware.enable = true;
 
   # Fail2ban enabled
   services.fail2ban.enable = true;
