@@ -239,7 +239,6 @@ services.displayManager.sddm.enable = true;
 
   # Nix Eco Utilities
   nix-index
-  nix-index-completion
   nix-tree
 
   # Custom Monolith Script, powers: "cleanUp" command
