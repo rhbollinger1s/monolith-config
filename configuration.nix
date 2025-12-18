@@ -33,10 +33,10 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
 # ----- [ KERNEL and FIRMWARE ] ------------------------------
-  # "This sets the kernel to 6.9, and nice and stable kernel."
+  # "This sets the kernel to 6.12, and nice and stable kernel."
   # "If you have newer hardware, you can switch it to linuxPackages_latest"
   # "If you came from Arch Linux, you may also switch to linuxPackages_latest"
-  boot.kernelPackages = pkgs.linuxPackages_6_9;
+  boot.kernelPackages = pkgs.linuxPackages_6_12;
   #boot.kernelPackages = pkgs.linuxPackages_latest; # If you have newer hardware
 
   #"This is where we tell your computer to install firmware. Please dont mess with this."
@@ -395,9 +395,8 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
 # ----- [ FIREWALL ] ------------------------------
+  networking.firewall.allowedTCPPorts = [ 22 80 443 ];  # SSH, HTTP, HTTPS
   networking.firewall.allowPing = true;
-  networking.firewall.allowedTCPPorts = [ 22 ];
-  networking.firewall.allowedUDPPorts = [  ];
   networking.firewall.enable = true;
   #programs.steam.remotePlay.openFirewall = true; # In steam as service block of code. This line is just to remind you that it exists.
 
