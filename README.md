@@ -1,11 +1,11 @@
 # Monolith-Config
 
-### "Modular, reproducible, general-purpose NixOS configuration ready to take on the desktop world."
+### "Simi-Modular, reproducible, general-purpose NixOS configuration ready to take on the desktop world."
 ### "Not yet stable, use as reference only until ready"
 
 ## Discription 
 
-Monolith-Config embraces the "batteries-included" approach without sacrificing modularity. It’s opinionated where it helps newcomers, but fully editable for experts. Everything is commented, organized into clear sections, and follows current NixOS best practices. Monolith works as a great reference config for the next NixOS configs that change the world.
+Monolith-Config embraces the "batteries-included" approach. It’s opinionated where it helps newcomers, but fully editable for experts. Everything is commented, organized into clear sections, and follows current NixOS best practices. Monolith works as a great reference config for the next NixOS configs that change the world.
 
 ## Features
 
