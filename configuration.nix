@@ -368,7 +368,7 @@
   # "Enable OpenSSH"
   # "This is basic so everyone can understand it."
   # "Advanced users should look into system hardening"
-  services.openssh.enable = true;
+  # services.openssh.enable = true;
 
   # "Here is a tool to run AI"
   #services.ollama = {
