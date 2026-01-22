@@ -94,15 +94,13 @@
 # "Don't uncomment both, it will cause errors."
 #
 # "Nivida ( Uncomment if using nvidia GPU )"
-# hardware = {
-#    graphics.enable = true;
-#    nvidia.modesetting.enable = true;
-#    nvidia.nvidiaSettings = true;
-#    nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
-#    nvidia.open = false; # If GPU is new enough, set to true
-#    hardware.opengl.enable = true;
-#    hardware.nvidia.opencl.enable = true;
-#  };
+#hardware.graphics.enable = true;
+#hardware.nvidia = {
+#  modesetting.enable = true;
+#  nvidiaSettings = true;
+#  package = config.boot.kernelPackages.nvidiaPackages.stable;
+#  open = false;  # Set to true if you have a newer NVIDIA GPU (RTX 30xx/40xx series)
+#};
 
 # "AMD ( Uncomment if using AMD GPU )"
 # hardware = {
